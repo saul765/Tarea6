@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Tarea6</string>
+
+    <string name="relleno">%1$s %2$s</string>
+    <string name="frijol_con_queso">Frijol con queso: %1$s</string>
+    <string name="revueltas">Revueltas: %1$s</string>
+    <string name="frijol">Frijol: %1$s</string>
+    <string name="ajo">Ajo %1$s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_orden_detalle">OrdenDetalleActivity</string>
+
+</resources>
