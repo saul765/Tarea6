@@ -83,6 +83,8 @@ class OrdenItemViewHolder(itemView : View, val listener:OrdenItemListener) : Rec
       }
 
 
+
+
     }
 
   }
@@ -127,6 +129,9 @@ class OrdenItemViewHolder(itemView : View, val listener:OrdenItemListener) : Rec
 
 
       }
+
+
+
 
 
     }

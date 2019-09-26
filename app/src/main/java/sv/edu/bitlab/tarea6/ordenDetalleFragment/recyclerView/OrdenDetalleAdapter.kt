@@ -9,6 +9,7 @@ import sv.edu.bitlab.tarea6.entity.Orden
 import sv.edu.bitlab.tarea6.entity.Pupusa
 import sv.edu.bitlab.tarea6.mainActivity.recyclerView.OrdenItemViewHolder
 
+
 class OrdenDetalleAdapter(var orden: Orden, val listener: OrdenDetalleViewHolder.OrdenItemListener
 ) : RecyclerView.Adapter<OrdenDetalleViewHolder>() {
 
@@ -16,8 +17,9 @@ class OrdenDetalleAdapter(var orden: Orden, val listener: OrdenDetalleViewHolder
     var pupusas=parseData2(orden.arroz,orden.maiz)
 
 
+
     override fun onBindViewHolder(holder: OrdenDetalleViewHolder, position: Int) {
-        holder.bindData(pupusas)
+        holder.bindData(pupusas,orden)
 
     }
 
@@ -31,7 +33,7 @@ class OrdenDetalleAdapter(var orden: Orden, val listener: OrdenDetalleViewHolder
 
 
 
-        return pupusas.size
+        return pupusas.size+ RESULT_ORDER
 
 
     }
@@ -94,5 +96,11 @@ return pupusas
 
 
         return relleno
+    }
+
+    companion object {
+
+        const val RESULT_ORDER=1
+
     }
 }

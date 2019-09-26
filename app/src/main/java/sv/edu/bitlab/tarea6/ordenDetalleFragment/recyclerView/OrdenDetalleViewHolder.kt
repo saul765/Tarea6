@@ -17,13 +17,14 @@ class OrdenDetalleViewHolder(itemView : View, val listener: OrdenItemListener)  
     var txtcantidad: TextView? = null
     var txtdescripcion : TextView? =null
     var contenedor:View? = null
+    lateinit var orden:Orden
 
-
-    fun bindData(pupusas:ArrayList<Pupusa>) {
+    fun bindData(pupusas:ArrayList<Pupusa>,orden: Orden) {
 
         contenedor = itemView.itemOrderDetalleContainer
         txtcantidad=itemView.txtcantidad
         txtdescripcion=itemView.txtdescripcion
+        this.orden=orden
 
 
 
@@ -38,10 +39,28 @@ class OrdenDetalleViewHolder(itemView : View, val listener: OrdenItemListener)  
 
     fun displayDetalle(pupusas: ArrayList<Pupusa>,position: Int){
 
-        txtcantidad!!.text = "X${pupusas.get(position).cantidad}"
-        txtdescripcion!!.text="${pupusas.get(position).tipo_masa} ${pupusas.get(position).relleno}"
+
+        if (position==pupusas.size){
+
+            txtcantidad!!.text = "Total"
+            txtdescripcion!!.text=" $${getTotal(pupusas)}"
+        }else{
+            txtcantidad!!.text = "X${pupusas.get(position).cantidad}"
+            txtdescripcion!!.text="${pupusas.get(position).tipo_masa} ${pupusas.get(position).relleno}"
+
+        }
 
 
+    }
+
+    fun getTotal(pupusas: ArrayList<Pupusa>):Float{
+        var total=0.0F
+
+        for (x in pupusas){
+
+            total=total+x.cantidad*orden.precioUnidad
+        }
+        return total
     }
 
 

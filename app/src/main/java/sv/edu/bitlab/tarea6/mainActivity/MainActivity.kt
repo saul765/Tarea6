@@ -6,10 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import sv.edu.bitlab.tarea6.R
 import sv.edu.bitlab.tarea6.entity.Orden
+import sv.edu.bitlab.tarea6.entity.RellenoWrapper
 import sv.edu.bitlab.tarea6.ordenDetalleFragment.OrdenDetalle
 import sv.edu.bitlab.tarea6.ordenDetalleFragment.OrdenDetalleActivity
+import sv.edu.bitlab.tarea6.startservice.ApiService
 
 class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionListener,OrdenDetalle.OnFragmentInteractionListener {
 
@@ -20,6 +25,7 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
         setContentView(R.layout.activity_main)
 
         val ordenes = Orden.randomOrders()
+
         //val orden = Orden()
         val fragment = OrdenFragment.newInstance(ordenes,orden)
         val builder = supportFragmentManager

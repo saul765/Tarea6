@@ -25,6 +25,7 @@ class Orden() : Parcelable{
       CHICHARRON to 0 ,
       FRIJOL_QUESO to 0
   )
+
   private var fecha:Calendar = Calendar.getInstance()
 
   override fun writeToParcel(dest: Parcel?, flags: Int) {
