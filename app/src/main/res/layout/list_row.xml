@@ -14,7 +14,7 @@
 
         <Button
                 android:text="@string/relleno"
-                android:layout_width="100dp"
+                android:layout_width="115dp"
                 android:layout_height="100dp"
                 android:id="@+id/button_maiz" android:layout_marginTop="8dp"
                 app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
                 app:layout_constraintHorizontal_bias="0.0"/>
         <Button
                 android:text="@string/relleno"
-                android:layout_width="100dp"
+                android:layout_width="115dp"
                 android:layout_height="100dp"
                 android:id="@+id/button_arroz" android:layout_marginTop="8dp"
                 app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"

@@ -1,11 +1,20 @@
 <resources>
     <string name="app_name">Tarea6</string>
 
-    <string name="relleno">%1$s %2$s</string>
-    <string name="frijol_con_queso">Frijol con queso: %1$s</string>
-    <string name="revueltas">Revueltas: %1$s</string>
-    <string name="frijol">Frijol: %1$s</string>
-    <string name="ajo">Ajo %1$s</string>
+    <string name="relleno">%1$s %2$d</string>
+    <string name="masa_relleno">%1$s %2$s</string>
+    <string name="cantidad"> X%1$d</string>
+    <string name="total">Total a Pagar </string>
+    <string name="precio_total">$%1$s</string>
+
+
+    <string name="queso">QUESO</string>
+    <string name="frijol">FRIJOLES</string>
+    <string name="frijol_queso">FRIJOL QUESO</string>
+    <string name="revuelta">REVUELTAS</string>
+    <string name="chicharron">CHICHARRON</string>
+    <string name="ajo">AJO</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

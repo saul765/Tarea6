@@ -42,11 +42,18 @@ class OrdenDetalleViewHolder(itemView : View, val listener: OrdenItemListener)  
 
         if (position==pupusas.size){
 
-            txtcantidad!!.text = "Total"
-            txtdescripcion!!.text=" $${getTotal(pupusas)}"
+            //txtcantidad!!.text = "Total"
+            txtcantidad!!.text = itemView.context.resources.getString(R.string.total)
+            //txtdescripcion!!.text=" $${getTotal(pupusas)}"
+            txtdescripcion!!.text=itemView.context.resources.getString(R.string.precio_total,getTotal(pupusas).toString())
         }else{
-            txtcantidad!!.text = "X${pupusas.get(position).cantidad}"
-            txtdescripcion!!.text="${pupusas.get(position).tipo_masa} ${pupusas.get(position).relleno}"
+            //txtcantidad!!.text = "X${pupusas.get(position).cantidad}"
+            var cantidad=pupusas.get(position).cantidad
+            txtcantidad!!.text = itemView.context.resources.getString(R.string.cantidad,cantidad)
+            //txtdescripcion!!.text="${pupusas.get(position).tipo_masa} ${pupusas.get(position).relleno}"
+            var tipo_masa= pupusas.get(position).tipo_masa
+            var relleno= pupusas.get(position).relleno
+            txtdescripcion!!.text=itemView.context.resources.getString(R.string.masa_relleno,tipo_masa,relleno)
 
         }
 
