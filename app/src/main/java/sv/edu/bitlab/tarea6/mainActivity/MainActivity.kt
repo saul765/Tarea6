@@ -11,6 +11,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import sv.edu.bitlab.tarea6.R
 import sv.edu.bitlab.tarea6.entity.Orden
+import sv.edu.bitlab.tarea6.entity.Orden2
+import sv.edu.bitlab.tarea6.entity.Relleno
 import sv.edu.bitlab.tarea6.entity.RellenoWrapper
 import sv.edu.bitlab.tarea6.ordenDetalleFragment.OrdenDetalle
 import sv.edu.bitlab.tarea6.ordenDetalleFragment.OrdenDetalleActivity
@@ -25,8 +27,27 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
         setContentView(R.layout.activity_main)
 
         val ordenes = Orden.randomOrders()
+       /* val orden2= Orden2()
 
-        //val orden = Orden()
+        ApiService.create().getRellenos().enqueue(object : Callback<List<Relleno>>{
+            override fun onResponse(
+                call: Call<List<Relleno>>,
+                response: Response<List<Relleno>>
+            ) {
+
+                var array= response.body()
+                parseData(array!!,orden2)
+
+                Log.d("JSON", array.toString())
+
+            }
+
+            override fun onFailure(call: Call<List<Relleno>>, t: Throwable) {
+                Log.d("ERROR","NO SE PUEDE MOSTRAR EL JSON")
+            }
+
+        })*/
+
         val fragment = OrdenFragment.newInstance(ordenes,orden)
         val builder = supportFragmentManager
             .beginTransaction()
@@ -52,7 +73,19 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
 
     }
 
+    fun parseData(list: List<Relleno>,orden2: Orden2){
 
+        for (item in list){
+
+            orden2.setHashPupusas(item.nombre)
+
+        }
+
+
+        Log.d("HASHMAPS","${orden2.maiz} ${orden2.arroz}")
+
+
+    }
     companion object{
         const val FRAGMENT_TAG = "ORDENES"
         const val FRAGMENT_TAG2= "ORDEN DETALLE"

@@ -2,14 +2,32 @@ package sv.edu.bitlab.tarea6.entity
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.util.Log
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
-class Orden() : Parcelable{
+class Orden : Parcelable{
+
+
+ constructor(){
+
+    var counter= 0
+    for (key in rellenos){
+
+      this.maiz.put(counter,0)
+      this.arroz.put(counter,0)
+      counter++
+
+    }
+
+  }
   var precioUnidad = 0.5f
-  var maiz = hashMapOf(
+  var maiz= hashMapOf<Int,Int>()
+  var arroz= hashMapOf<Int,Int>()
+  /*var maiz = hashMapOf(
       QUESO to 0,
       FRIJOLES to 0,
       REVUELTAS to 0,
@@ -24,13 +42,24 @@ class Orden() : Parcelable{
       AJO to 0 ,
       CHICHARRON to 0 ,
       FRIJOL_QUESO to 0
+  )*/
+
+  var rellenos = mutableListOf<String>(
+    "QUESO","FRIJOLES", "REVUELTAS","AJO", "CHICHARRON", "FRIJOL QUESO","CAMARON","LOROCO"
   )
 
   private var fecha:Calendar = Calendar.getInstance()
 
   override fun writeToParcel(dest: Parcel?, flags: Int) {
     dest!!.writeFloat(this.precioUnidad)
-    dest.writeInt(maiz[QUESO]!!)
+
+    for(item in 0 until rellenos.size){
+      dest.writeInt(maiz[item]!!)
+      dest.writeInt(arroz[item]!!)
+
+
+    }
+  /*  dest.writeInt(maiz[QUESO]!!)
     dest.writeInt(maiz[FRIJOLES]!!)
     dest.writeInt(maiz[REVUELTAS]!!)
     dest.writeInt(maiz[AJO]!!)
@@ -42,7 +71,7 @@ class Orden() : Parcelable{
     dest.writeInt(arroz[REVUELTAS]!!)
     dest.writeInt(arroz[AJO]!!)
     dest.writeInt(arroz[CHICHARRON]!!)
-    dest.writeInt(arroz[FRIJOL_QUESO]!!)
+    dest.writeInt(arroz[FRIJOL_QUESO]!!)*/
 
     dest.writeString(this.getFecha())
   }
@@ -50,7 +79,13 @@ class Orden() : Parcelable{
   constructor(parcel: Parcel) : this() {
     precioUnidad = parcel.readFloat()
 
-    maiz[QUESO] = parcel.readInt()
+      for(item in 0 until rellenos.size){
+          maiz[item]= parcel.readInt()
+          arroz[item]= parcel.readInt()
+
+
+      }
+    /*maiz[QUESO] = parcel.readInt()
     maiz[FRIJOLES] = parcel.readInt()
     maiz[REVUELTAS] = parcel.readInt()
     maiz[AJO] = parcel.readInt()
@@ -62,8 +97,8 @@ class Orden() : Parcelable{
     arroz[REVUELTAS] = parcel.readInt()
     arroz[AJO] = parcel.readInt()
     arroz[CHICHARRON] = parcel.readInt()
-    arroz[FRIJOL_QUESO] = parcel.readInt()
-    setFecha(parcel.readString()!!)
+    arroz[FRIJOL_QUESO] = parcel.readInt()*/
+   setFecha(parcel.readString()!!)
   }
 
   override fun describeContents(): Int {

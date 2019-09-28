@@ -13,13 +13,14 @@ import sv.edu.bitlab.tarea6.mainActivity.OrdenFragment.OrdenFragmentInteractionL
 import kotlinx.android.synthetic.main.fragment_orden.view.*
 import sv.edu.bitlab.tarea6.R
 import sv.edu.bitlab.tarea6.entity.Orden
+import sv.edu.bitlab.tarea6.entity.Orden2
 
 
-class MyOrdenRecyclerViewAdapter(var orden: Orden,  val listener:OrdenItemViewHolder.OrdenItemListener
+class MyOrdenRecyclerViewAdapter(var orden: Orden,var orden2: Orden2,  val listener:OrdenItemViewHolder.OrdenItemListener
 ) : RecyclerView.Adapter<OrdenItemViewHolder>() {
 
     override fun onBindViewHolder(holder: OrdenItemViewHolder, position: Int) {
-        holder.bindData(orden)
+        holder.bindData(orden,orden2)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdenItemViewHolder {

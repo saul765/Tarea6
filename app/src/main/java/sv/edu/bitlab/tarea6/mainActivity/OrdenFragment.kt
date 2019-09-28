@@ -11,11 +11,20 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import kotlinx.android.synthetic.main.fragment_orden.*
+import kotlinx.android.synthetic.main.fragment_orden.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import sv.edu.bitlab.tarea6.R
 
 import sv.edu.bitlab.tarea6.entity.Orden
+import sv.edu.bitlab.tarea6.entity.Orden2
+import sv.edu.bitlab.tarea6.entity.Relleno
 import sv.edu.bitlab.tarea6.mainActivity.recyclerView.MyOrdenRecyclerViewAdapter
 import sv.edu.bitlab.tarea6.mainActivity.recyclerView.OrdenItemViewHolder
+import sv.edu.bitlab.tarea6.startservice.ApiService
 
 /**
  * A fragment representing a list of Items.
@@ -44,9 +53,13 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
     private var listener: OrdenFragmentInteractionListener? = null
     private var listView: RecyclerView? = null
     private var inflater: LayoutInflater? = null
+    private var loadingContainer:View?=null
+    private var orden2=Orden2()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         orderLists = arguments!!.getParcelableArrayList<Orden>(ORDERS_LIST)!!
         order=arguments!!.getParcelable<Orden>(ORDER)!!
 
@@ -61,15 +74,55 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
         savedInstanceState: Bundle?
     ): View? {
         this.inflater = inflater
+
+
         return inflater.inflate(R.layout.fragment_orden_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listView = view.findViewById(R.id.ordersListView)
-        listView!!.layoutManager = LinearLayoutManager(this.context)
 
-        listView!!.adapter = MyOrdenRecyclerViewAdapter(order, this)
+        listView!!.layoutManager = LinearLayoutManager(this.context)
+        listView!!.adapter = MyOrdenRecyclerViewAdapter(order, orden2,this)
+
+
+
+        val order2= Orden2()
+        activity!!.loading_container.visibility=View.VISIBLE
+        ApiService.create().getRellenos().enqueue(object : Callback<List<Relleno>> {
+            override fun onResponse(
+                call: Call<List<Relleno>>,
+                response: Response<List<Relleno>>
+            ) {
+                activity!!.loading_container.visibility=View.GONE
+                var array= response.body()
+                parseData(array!!,order2)
+               val adapter = listView!!.adapter as MyOrdenRecyclerViewAdapter
+                adapter.orden2=order2
+                adapter.notifyDataSetChanged()
+
+
+                Log.d("JSON", array.toString())
+                Log.d("ORDEN1","${order2.arroz} ${order2.maiz}")
+
+            }
+
+            override fun onFailure(call: Call<List<Relleno>>, t: Throwable) {
+                Log.d("ERROR","NO SE PUEDE MOSTRAR EL JSON")
+
+                loadingContainer!!.visibility = View.GONE
+                AlertDialog.Builder(view.context)
+                    .setTitle("ERROR")
+                    .setMessage("Error con el servidor lo sentimos")
+                    .setNeutralButton("ok", null)
+                    .create()
+                    .show()
+            }
+
+        })
+
+
     }
 
     override fun onAttach(context: Context) {
@@ -104,6 +157,20 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
 
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
+    }
+
+    fun parseData(list: List<Relleno>,orden2: Orden2){
+
+        for (item in list){
+
+            orden2.setHashPupusas(item.nombre)
+
+        }
+
+
+        Log.d("HASHMAPS","${orden2.maiz} ${orden2.arroz}")
+
+
     }
 
     companion object {

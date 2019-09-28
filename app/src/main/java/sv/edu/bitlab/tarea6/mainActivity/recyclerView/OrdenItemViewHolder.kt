@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_row.view.*
 import sv.edu.bitlab.tarea6.*
 import sv.edu.bitlab.tarea6.entity.Orden
+import sv.edu.bitlab.tarea6.entity.Orden2
+import sv.edu.bitlab.tarea6.entity.Pupusa
 
 class OrdenItemViewHolder(itemView : View, val listener:OrdenItemListener) : RecyclerView.ViewHolder(itemView) {
 
@@ -23,42 +25,62 @@ class OrdenItemViewHolder(itemView : View, val listener:OrdenItemListener) : Rec
 
 
 
-  fun bindData(orden: Orden) {
+  fun bindData(orden: Orden,orden2: Orden2) {
 
 
     contenedor = itemView.itemContainer
     btnarroz=itemView.button_arroz
     btnmaiz=itemView.button_maiz
-    displayRellenos(orden,this.adapterPosition)
+    //displayRellenos(orden,this.adapterPosition)
+    Log.d("ORDEN1","${orden.arroz} ${orden.maiz}")
+    Log.d("ORDEN2 BIND DATA","${orden2.arroz} ${orden2.maiz}")
+    displayRellenos2(orden,orden2,this.adapterPosition)
 
 
     btnmaiz!!.setOnClickListener {
       listener.onItemClick(this.adapterPosition)
-     updateMaiz(orden,this.adapterPosition,"add")
+     //updateMaiz(orden,this.adapterPosition,"add")
+      updateMaiz2(orden,this.adapterPosition,"add")
 
       Log.d("RECYCLER_VIEW", " hash arroz ${orden.arroz.toString()} hash maiz${orden.maiz.toString()}")
 
     }
    btnmaiz!!.setOnLongClickListener {
 
-     updateMaiz(orden,this.adapterPosition,"reset")
+     //updateMaiz(orden,this.adapterPosition,"reset")
+     updateMaiz2(orden,this.adapterPosition,"reset")
      return@setOnLongClickListener true
    }
     btnarroz!!.setOnClickListener {
       listener.onItemClick(this.adapterPosition)
-      updateArroz(orden,this.adapterPosition,"add")
+      //updateArroz(orden,this.adapterPosition,"add")
+      updateArroz2(orden,this.adapterPosition,"add")
       Log.d("RECYCLER_VIEW", " hash arroz ${orden.arroz.toString()} hash maiz${orden.maiz.toString()}")
     }
     contenedor!!.setOnClickListener { Log.d("RECYCLER_VIEW", "Click en contenedor") }
 
     btnarroz!!.setOnLongClickListener {
 
-      updateArroz(orden,this.adapterPosition,"reset")
+      //updateArroz(orden,this.adapterPosition,"reset")
+      updateArroz2(orden,this.adapterPosition,"reset")
       return@setOnLongClickListener true
     }
   }
 
+  fun displayRellenos2(orden: Orden,orden2: Orden2,position: Int){
+    /*var relleno=orden2.rellenos.get(position)
+    var cantidad_maiz=orden2.maiz[relleno]
+    btnmaiz!!.text=itemView.context.getString(R.string.relleno,relleno,cantidad_maiz)
+    var cantidad_arroz=orden2.arroz[relleno]
+    btnarroz!!.text=itemView.context.getString(R.string.relleno,relleno,cantidad_arroz)*/
 
+    var relleno=orden.rellenos.get(position)
+   var cantidad_maiz=orden.maiz[position]
+   btnmaiz!!.text=itemView.context.getString(R.string.relleno,relleno,cantidad_maiz)
+   var cantidad_arroz=orden.arroz[position]
+   btnarroz!!.text=itemView.context.getString(R.string.relleno,relleno,cantidad_arroz)
+
+  }
   fun displayRellenos(orden:Orden,position: Int){
 
     when(position){
@@ -133,6 +155,33 @@ class OrdenItemViewHolder(itemView : View, val listener:OrdenItemListener) : Rec
 
   }
 
+  fun updateMaiz2(orden: Orden,position: Int,action: String){
+
+    if (action.equals("add")){
+      orden.maiz[position] = orden.maiz[position]!! + 1
+    }else{
+      orden.maiz[position]=0
+    }
+    var cantidad = orden.maiz[position]
+    var relleno = orden.rellenos.get(position)
+    btnmaiz!!.text = itemView.context.resources.getString(R.string.relleno, relleno, cantidad)
+
+  }
+
+  fun updateArroz2(orden: Orden, position: Int, action: String){
+    if (action.equals("add")){
+      Log.d("ADD","im in add")
+      orden.arroz[position] = orden.arroz[position]!! + 1
+    }else{
+      Log.d("NOT ADD","not in add")
+      orden.arroz[position]=0
+    }
+
+    var cantidad = orden.arroz[position]
+    var relleno = orden.rellenos.get(position)
+
+    btnarroz!!.text = itemView.context.resources.getString(R.string.relleno, relleno, cantidad)
+  }
   fun updateMaiz(orden:Orden,position: Int,action:String) {
 
 
