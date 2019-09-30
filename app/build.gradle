@@ -3,6 +3,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlinx-serialization'
+
+repositories {
+    // artifacts are published to JCenter
+    jcenter()
+}
 
 android {
     compileSdkVersion 29
@@ -38,6 +44,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.0'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.13.0" // JVM dependency
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.9.1'
+
 
 
 

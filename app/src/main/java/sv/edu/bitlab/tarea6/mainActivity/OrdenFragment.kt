@@ -1,5 +1,6 @@
 package sv.edu.bitlab.tarea6.mainActivity
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.fragment_orden.*
 import kotlinx.android.synthetic.main.fragment_orden.view.*
@@ -55,16 +58,17 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
     private var inflater: LayoutInflater? = null
     private var loadingContainer:View?=null
     private var orden2=Orden2()
+    private var progressBar:ProgressDialog?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
-        orderLists = arguments!!.getParcelableArrayList<Orden>(ORDERS_LIST)!!
+//        orderLists = arguments!!.getParcelableArrayList<Orden>(ORDERS_LIST)!!
         order=arguments!!.getParcelable<Orden>(ORDER)!!
 
         arguments?.let {
-            orderLists = arguments!!.getParcelableArrayList<Orden>(ORDERS_LIST)!!
+            //orderLists = arguments!!.getParcelableArrayList<Orden>(ORDERS_LIST)!!
             order=arguments!!.getParcelable<Orden>(ORDER)!!
         }
     }
@@ -83,28 +87,37 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
         super.onViewCreated(view, savedInstanceState)
         listView = view.findViewById(R.id.ordersListView)
 
-        listView!!.layoutManager = LinearLayoutManager(this.context)
+        listView!!.layoutManager = LinearLayoutManager(this.context!!)
         listView!!.adapter = MyOrdenRecyclerViewAdapter(order, orden2,this)
 
 
-
         val order2= Orden2()
-        activity!!.loading_container.visibility=View.VISIBLE
+       val orden1=Orden()
+        progressBar= ProgressDialog(context)
+        progressBar!!.setTitle("Fetching data")
+        progressBar!!.setMessage("Getting Data from Server Please wait")
+
+        progressBar!!.show()
+        //activity!!.loading_container.visibility=View.VISIBLE
         ApiService.create().getRellenos().enqueue(object : Callback<List<Relleno>> {
             override fun onResponse(
                 call: Call<List<Relleno>>,
                 response: Response<List<Relleno>>
             ) {
-                activity!!.loading_container.visibility=View.GONE
+               progressBar!!.hide()
+               // activity!!.loading_container.visibility=View.GONE
                 var array= response.body()
-                parseData(array!!,order2)
-               val adapter = listView!!.adapter as MyOrdenRecyclerViewAdapter
-                adapter.orden2=order2
+                parseData(array!!,order2,order)
+              val adapter = listView!!.adapter as MyOrdenRecyclerViewAdapter
+               // adapter.orden2=order2
+               // adapter.orden=orden1
+
+
+                Log.d("MUTABLE LIST ORDENN 1","${adapter.orden.rellenos}")
+                Log.d("MUTABLE PARCE","${order.rellenos}")
                 adapter.notifyDataSetChanged()
 
 
-                Log.d("JSON", array.toString())
-                Log.d("ORDEN1","${order2.arroz} ${order2.maiz}")
 
             }
 
@@ -153,36 +166,41 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
     interface OrdenFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
+        fun returnOrden(orden:Orden)
     }
 
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
 
-    fun parseData(list: List<Relleno>,orden2: Orden2){
+    fun parseData(list: List<Relleno>,orden2: Orden2,orden: Orden){
+        var counter=orden.arroz.size
+
 
         for (item in list){
 
             orden2.setHashPupusas(item.nombre)
+            orden.setHashPupusas(item.nombre,counter)
+            counter++
 
         }
 
 
-        Log.d("HASHMAPS","${orden2.maiz} ${orden2.arroz}")
+       // Log.d("HASHMAPS","${orden2.maiz} ${orden2.arroz}")
+       // Log.d("HASHMAPS orden 1","${orden.maiz} ${orden.arroz}")
+        //Log.d("MUTABLE LIST","${orden.rellenos}")
 
 
     }
 
     companion object {
 
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
 
         // TODO: Customize parameter initialization
         @JvmStatic
-        fun newInstance(orderList: ArrayList<Orden>,orden: Orden) : OrdenFragment {
+        fun newInstance(orden: Orden) : OrdenFragment {
             val params = Bundle()
-            params.putParcelableArrayList(ORDERS_LIST, orderList)
+          /*  params.putParcelableArrayList(ORDERS_LIST, orderList)*/
             params.putParcelable(ORDER,orden)
             val fragment = OrdenFragment()
             fragment.arguments = params

@@ -32,7 +32,7 @@ class OrdenItemViewHolder(itemView : View, val listener:OrdenItemListener) : Rec
     btnarroz=itemView.button_arroz
     btnmaiz=itemView.button_maiz
     //displayRellenos(orden,this.adapterPosition)
-    Log.d("ORDEN1","${orden.arroz} ${orden.maiz}")
+    Log.d("ORDEN1 BIND DATA","${orden.arroz} ${orden.maiz}")
     Log.d("ORDEN2 BIND DATA","${orden2.arroz} ${orden2.maiz}")
     displayRellenos2(orden,orden2,this.adapterPosition)
 
