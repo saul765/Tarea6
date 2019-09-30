@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import sv.edu.bitlab.tarea6.R
 import sv.edu.bitlab.tarea6.entity.Orden
+import sv.edu.bitlab.tarea6.entity.Pupusa
 
 import sv.edu.bitlab.tarea6.mainActivity.OrdenFragment
 import sv.edu.bitlab.tarea6.mainActivity.recyclerView.MyOrdenRecyclerViewAdapter
@@ -45,31 +46,17 @@ class OrdenDetalle : Fragment(),OrdenDetalleViewHolder.OrdenItemListener {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    // TODO: Rename and change types of parameters
 
 
-    private lateinit var order: Orden
+    private lateinit var listaPupusa: ArrayList<Pupusa>
     private var listener: OnFragmentInteractionListener? = null
     private var listView: RecyclerView? = null
     private var inflater: LayoutInflater? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        order=arguments!!.getParcelable<Orden>(ORDER_DETALLE)!!
-
-        arguments?.let {
-
-            order=arguments!!.getParcelable<Orden>(ORDER_DETALLE)!!
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-       // return inflater.inflate(R.layout.fragment_orden_detalle2, container, false)
         this.inflater=inflater
         return inflater.inflate(R.layout.fragment_detalle_orden_list, container, false)
     }
@@ -79,7 +66,7 @@ class OrdenDetalle : Fragment(),OrdenDetalleViewHolder.OrdenItemListener {
         listView = view.findViewById(R.id.ordersDetalleListView)
         listView!!.layoutManager = LinearLayoutManager(this.context)
 
-       listView!!.adapter = OrdenDetalleAdapter(order, this)
+       listView!!.adapter = OrdenDetalleAdapter(listaPupusa, this)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -120,22 +107,10 @@ class OrdenDetalle : Fragment(),OrdenDetalleViewHolder.OrdenItemListener {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OrdenDetalle.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(orden: Orden) :OrdenDetalle{
-            val params = Bundle()
-
-            params.putParcelable(ORDER_DETALLE, orden)
+        fun newInstance(lista: ArrayList<Pupusa>) :OrdenDetalle{
             val fragment = OrdenDetalle()
-            fragment.arguments = params
+            fragment.listaPupusa = lista
             return fragment
         }
     }

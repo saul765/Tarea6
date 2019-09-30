@@ -1,23 +1,35 @@
 package sv.edu.bitlab.tarea6.entity
 
-class Pupusa{
+import android.os.Parcel
+import android.os.Parcelable
 
-
-    var relleno= ""
-    var cantidad=0
-    var tipo_masa=""
-
-
-    constructor()
-
-    constructor(relleno:String,cantidad:Int,tipo_masa:String){
-        this.relleno=relleno
-        this.cantidad=cantidad
-        this.tipo_masa=tipo_masa
-
+data class Pupusa(
+    var relleno: String?, var cantidad:Int, var tipo_masa: String?
+):Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readInt(),
+        parcel.readString()
+    ) {
     }
 
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(relleno)
+        parcel.writeInt(cantidad)
+        parcel.writeString(tipo_masa)
+    }
 
+    override fun describeContents(): Int {
+        return 0
+    }
 
+    companion object CREATOR : Parcelable.Creator<Pupusa> {
+        override fun createFromParcel(parcel: Parcel): Pupusa {
+            return Pupusa(parcel)
+        }
 
+        override fun newArray(size: Int): Array<Pupusa?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

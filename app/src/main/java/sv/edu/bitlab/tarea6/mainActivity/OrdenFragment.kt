@@ -51,7 +51,7 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
 
     // TODO: Customize parameters
 
-    private var orderLists = arrayListOf<Orden>()
+
     private lateinit var order:Orden
     private var listener: OrdenFragmentInteractionListener? = null
     private var listView: RecyclerView? = null
@@ -123,8 +123,8 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
 
             override fun onFailure(call: Call<List<Relleno>>, t: Throwable) {
                 Log.d("ERROR","NO SE PUEDE MOSTRAR EL JSON")
-
-                loadingContainer!!.visibility = View.GONE
+                progressBar!!.hide()
+                //activity!!.loadingContainer.visibility = View.GONE
                 AlertDialog.Builder(view.context)
                     .setTitle("ERROR")
                     .setMessage("Error con el servidor lo sentimos")
@@ -199,8 +199,9 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
         // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(orden: Orden) : OrdenFragment {
+
             val params = Bundle()
-          /*  params.putParcelableArrayList(ORDERS_LIST, orderList)*/
+
             params.putParcelable(ORDER,orden)
             val fragment = OrdenFragment()
             fragment.arguments = params

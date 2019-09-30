@@ -4,6 +4,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import sv.edu.bitlab.tarea6.R
+import sv.edu.bitlab.tarea6.entity.HistorialOrden
+import sv.edu.bitlab.tarea6.entity.Pupusa
 
 
 import sv.edu.bitlab.tarea6.ordenHistorial.OrdenHistorialFragment.OnListFragmentInteractionListener
@@ -14,7 +16,7 @@ import sv.edu.bitlab.tarea6.ordenHistorial.OrdenHistorialFragment.OnListFragment
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class MyordenHistorialRecyclerViewAdapter( private val listener: OrdenHistorialViewHolder.OrdenHistorialItemListener
+class MyordenHistorialRecyclerViewAdapter(var historial: ArrayList<HistorialOrden>, private val listener: OrdenHistorialViewHolder.OrdenHistorialItemListener
 ) : RecyclerView.Adapter<OrdenHistorialViewHolder>() {
 
 
@@ -26,12 +28,12 @@ class MyordenHistorialRecyclerViewAdapter( private val listener: OrdenHistorialV
     }
 
     override fun onBindViewHolder(holder: OrdenHistorialViewHolder, position: Int) {
-
+            holder.bindData(historial)
     }
 
     override fun getItemCount(): Int {
 
-        return 5
+        return historial.size
     }
 
 

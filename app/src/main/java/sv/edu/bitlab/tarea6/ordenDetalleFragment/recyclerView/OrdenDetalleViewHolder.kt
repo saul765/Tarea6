@@ -17,14 +17,12 @@ class OrdenDetalleViewHolder(itemView : View, val listener: OrdenItemListener)  
     var txtcantidad: TextView? = null
     var txtdescripcion : TextView? =null
     var contenedor:View? = null
-    lateinit var orden:Orden
 
-    fun bindData(pupusas:ArrayList<Pupusa>,orden: Orden) {
+    fun bindData(pupusas:ArrayList<Pupusa>) {
 
         contenedor = itemView.itemOrderDetalleContainer
         txtcantidad=itemView.txtcantidad
         txtdescripcion=itemView.txtdescripcion
-        this.orden=orden
 
 
 
@@ -65,7 +63,7 @@ class OrdenDetalleViewHolder(itemView : View, val listener: OrdenItemListener)  
 
         for (x in pupusas){
 
-            total=total+x.cantidad*orden.precioUnidad
+            total=total+x.cantidad*0.5F
         }
         return total
     }

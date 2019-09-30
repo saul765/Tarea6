@@ -18,16 +18,15 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
     override fun returnOrden(orden: Orden) {
         //this.orden=orden
     }
-    val maiz=HashMap<Int,Int>()
-    val arroz=HashMap<Int,Int>()
-    val rellenos= mutableListOf<String>()
-    val orden=Orden()
 
+
+    val orden=Orden()
+    lateinit var listaPupusas:ArrayList<Pupusa>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        listaPupusas = ArrayList()
         val ordenes = Orden.randomOrders()
 
         val fragment = OrdenFragment.newInstance(orden)
@@ -38,19 +37,11 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
         builder.commitAllowingStateLoss()
 
         sendOrder.setOnClickListener {
-            val rellenos= ArrayList<String>()
-            val a = arrayListOf<Int>(1,2,3)
-            rellenos.addAll(orden.rellenos)
-            val intent = Intent(this,OrdenDetalleActivity::class.java).apply {
-                putExtra("parcel",orden)
-                putExtra("rellenos",rellenos)
-                putExtra("ddd",a)
-                putStringArrayListExtra("rellenos",rellenos)
-               // putExtra("reparcel",orderDetail)
-
-                Log.d("MAIN ACT parce", " ${orden.rellenos}")
-                Log.d("RELLENOS","$rellenos")
-            }
+            parseData()
+            var bundle = Bundle()
+            bundle.putParcelableArrayList("Orden",listaPupusas)
+            val intent = Intent(this,OrdenDetalleActivity::class.java)
+            intent.putExtras(bundle)
             startActivity(intent)
             Log.d("MAIN ACT", " hash arroz ${orden.arroz.toString()} hash maiz${orden.maiz.toString()}")
 
@@ -59,6 +50,20 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
 
     }
 
+
+    fun parseData(){
+        listaPupusas.clear()
+        for (i in 0 until orden.rellenos.size){
+            var pupusa1 = Pupusa(orden.rellenos[i],orden.maiz[i]!!,"Maiz")
+            var pupusa2 = Pupusa(orden.rellenos[i],orden.arroz[i]!!,"Arroz")
+            if(pupusa1.cantidad!=0){
+                listaPupusas.add(pupusa1)
+            }
+            if(pupusa2.cantidad!=0){
+                listaPupusas.add(pupusa2)
+            }
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
@@ -77,7 +82,11 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
             R.id.historial->{
 
                 val intent2 = Intent(this,OrdenHistorialActivity::class.java).apply {
-
+                   /* val a = arrayListOf<Int>(1,2,3)
+                    putExtra("ddd",a)*/
+                    val rellenos= arrayListOf<String>()
+                    rellenos.addAll(orden.rellenos)
+                    putExtra("rellenos",rellenos)
                 }
                 startActivity(intent2)
 
@@ -108,5 +117,6 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
         const val FRAGMENT_TAG = "ORDENES"
         const val FRAGMENT_TAG2= "ORDEN DETALLE"
         const val FRAGMENT_TAG3= "ORDEN HISTORIAL"
+        const val FRAGMENT_TAG4= "ORDEN HISTORIAL DETALLE"
     }
 }
