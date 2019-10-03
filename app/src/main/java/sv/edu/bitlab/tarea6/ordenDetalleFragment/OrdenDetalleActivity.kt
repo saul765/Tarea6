@@ -20,10 +20,11 @@ import sv.edu.bitlab.tarea6.startservice.ApiService
 class OrdenDetalleActivity : AppCompatActivity(),OrdenDetalle.OnFragmentInteractionListener {
     override fun onClickOrder(orden: HistorialOrden,ordenPOST: HistorialOrdenPOST) {
 
+
         confirm_order.setOnClickListener {
 
 
-            Toast.makeText(applicationContext,"ORDER test",Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext,"SENDING ORDER test",Toast.LENGTH_LONG).show()
 
             //Log.d("historial","$orden")
            ApiService.create().submitOrden(ordenPOST).enqueue(object : Callback<HistorialOrdenPOST> {
@@ -32,9 +33,10 @@ class OrdenDetalleActivity : AppCompatActivity(),OrdenDetalle.OnFragmentInteract
                     response: Response<HistorialOrdenPOST>
                 ) {
 
-                    Toast.makeText(applicationContext,"ORDER FINISHED",Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext,"ORDER SENT",Toast.LENGTH_LONG).show()
                     Log.d("STATUS","SE ENVIO")
                     Log.d("STATUS2","$ordenPOST")
+
                 }
 
                 override fun onFailure(call: Call<HistorialOrdenPOST>, t: Throwable) {
@@ -43,11 +45,6 @@ class OrdenDetalleActivity : AppCompatActivity(),OrdenDetalle.OnFragmentInteract
                 }
 
             })
-
-
-
-
-
 
 
 
@@ -63,6 +60,7 @@ class OrdenDetalleActivity : AppCompatActivity(),OrdenDetalle.OnFragmentInteract
         //val orden=  intent.getParcelableExtra<Orden>("parcel")
 
         val listaPupusas = intent.extras?.getParcelableArrayList<Pupusa>("Orden");
+
 
         val fragment = OrdenDetalle.newInstance(listaPupusas!!)
         val builder = supportFragmentManager

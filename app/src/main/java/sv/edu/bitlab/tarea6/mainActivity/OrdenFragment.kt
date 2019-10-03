@@ -119,6 +119,8 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
                 Log.d("MUTABLE LIST ORDENN 1","${adapter.orden.rellenos}")
                 Log.d("MUTABLE PARCE","${order.rellenos}")*/
                 adapter.notifyDataSetChanged()
+                listener?.returnPupusaList(array as ArrayList<Relleno>)
+
 
 
 
@@ -160,6 +162,7 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
         fun returnOrden(orden:Orden)
+        fun returnPupusaList(list:ArrayList<Relleno>)
     }
 
     fun onButtonPressed(uri: Uri) {

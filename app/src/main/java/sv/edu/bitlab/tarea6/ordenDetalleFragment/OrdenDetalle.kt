@@ -67,7 +67,7 @@ class OrdenDetalle : Fragment(),OrdenDetalleViewHolder.OrdenItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listView = view.findViewById(R.id.ordersDetalleListView)
-        listView!!.layoutManager = LinearLayoutManager(this.context)
+        listView!!.layoutManager = LinearLayoutManager(this.context!!)
 
        listView!!.adapter = OrdenDetalleAdapter(listaPupusa, this)
 
@@ -97,8 +97,7 @@ class OrdenDetalle : Fragment(),OrdenDetalleViewHolder.OrdenItemListener {
     }
 
   fun makeOrder():HistorialOrden{
-
-      val id=10
+      val id=13
       val status="recibida"
       val arrozFinal:ArrayList<OrdenPupusas> = ArrayList()
       arrozFinal.add(OrdenPupusas("1","maiz",5,"3-10-2019"))
@@ -113,12 +112,23 @@ class OrdenDetalle : Fragment(),OrdenDetalleViewHolder.OrdenItemListener {
   }
  fun makeOrder2():HistorialOrdenPOST{
 
-     val id=10
+     val id=13
      val status="recibida"
      val arrozFinal:ArrayList<OrdenPupusasPOST> = ArrayList()
-     arrozFinal.add(OrdenPupusasPOST(1,"maiz",5,5,"2019-10-3","2019-10-3",10))
      val maizFinal:ArrayList<OrdenPupusasPOST> = ArrayList()
-     maizFinal.add(OrdenPupusasPOST(2,"arroz",6,5,"2019-10-3","2019-10-3",10))
+     for (item in 0 until listaPupusa.size){
+        if (listaPupusa.get(item).tipo_masa.equals("Arroz")){
+            arrozFinal.add(OrdenPupusasPOST(1,"arroz",listaPupusa.get(item).id,listaPupusa.get(item).cantidad,"2019-10-3","2019-10-3",13))
+        }
+
+         if (listaPupusa.get(item).tipo_masa.equals("Maiz")){
+             maizFinal.add(OrdenPupusasPOST(2,"maiz",listaPupusa.get(item).id,listaPupusa.get(item).cantidad,"2019-10-3","2019-10-3",13))
+
+         }
+
+
+     }
+
      val precioUnidad=0.5F
      val total= getTotal()
 

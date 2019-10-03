@@ -3,10 +3,9 @@ package sv.edu.bitlab.tarea6.entity
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Pupusa(
-    var relleno: String?, var cantidad:Int, var tipo_masa: String?
-):Parcelable {
+data class Pupusa(var id:Int,var relleno: String?, var cantidad:Int, var tipo_masa: String?):Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readInt(),
         parcel.readString(),
         parcel.readInt(),
         parcel.readString()
@@ -14,6 +13,7 @@ data class Pupusa(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
         parcel.writeString(relleno)
         parcel.writeInt(cantidad)
         parcel.writeString(tipo_masa)

@@ -15,8 +15,29 @@ import sv.edu.bitlab.tarea6.ordenDetalleFragment.OrdenDetalleActivity
 import sv.edu.bitlab.tarea6.ordenHistorial.OrdenHistorialActivity
 
 class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionListener,OrdenDetalle.OnFragmentInteractionListener {
+
+    override fun returnPupusaList(list: ArrayList<Relleno>) {
+        listaAPI=list
+        Log.d("lISTA PUPA", "$listaPupusas")
+        sendOrder.setOnClickListener {
+            parseData(listaAPI)
+            var bundle = Bundle()
+            bundle.putParcelableArrayList("Orden",listaPupusas)
+
+            val intent = Intent(this,OrdenDetalleActivity::class.java)
+            intent.putExtras(bundle)
+            startActivity(intent)
+            Log.d("lISTA PUPA", "$listaPupusas")
+
+
+        }
+
+
+
+    }
+
     override fun onClickOrder(orden: HistorialOrden, ordenPOST: HistorialOrdenPOST) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
 
@@ -27,7 +48,8 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
 
     val orden=Orden()
     lateinit var listaPupusas:ArrayList<Pupusa>
-
+    lateinit var listaAPI:ArrayList<Relleno>
+    lateinit var listaAPIprocessed:ArrayList<OrdenPupusas>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,8 +65,8 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
            // .addToBackStack(FRAGMENT_TAG)
         builder.commitAllowingStateLoss()
 
-        sendOrder.setOnClickListener {
-            parseData()
+      /*  sendOrder.setOnClickListener {
+            parseData(listaAPI)
             var bundle = Bundle()
             bundle.putParcelableArrayList("Orden",listaPupusas)
 
@@ -54,16 +76,27 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
             Log.d("MAIN ACT", " hash arroz ${orden.arroz.toString()} hash maiz${orden.maiz.toString()}")
 
 
-        }
+        }*/
 
     }
 
 
-    fun parseData(){
+    fun parseData(apiArray:ArrayList<Relleno>){
         listaPupusas.clear()
+        var id=0
+
         for (i in 0 until orden.rellenos.size){
-            var pupusa1 = Pupusa(orden.rellenos[i],orden.maiz[i]!!,"Maiz")
-            var pupusa2 = Pupusa(orden.rellenos[i],orden.arroz[i]!!,"Arroz")
+
+            for (x in 0 until apiArray.size){
+
+                if(orden.rellenos.get(i).equals(apiArray.get(x).nombre)){
+                    id=apiArray.get(x).id
+
+                }
+
+            }
+            var pupusa1 = Pupusa(id,orden.rellenos[i],orden.maiz[i]!!,"Maiz")
+            var pupusa2 = Pupusa(id,orden.rellenos[i],orden.arroz[i]!!,"Arroz")
             if(pupusa1.cantidad!=0){
                 listaPupusas.add(pupusa1)
             }
@@ -71,7 +104,10 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
                 listaPupusas.add(pupusa2)
             }
         }
+
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
@@ -121,6 +157,7 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
 
 
     }
+
     companion object{
         const val FRAGMENT_TAG = "ORDENES"
         const val FRAGMENT_TAG2= "ORDEN DETALLE"
