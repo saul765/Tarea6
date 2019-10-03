@@ -33,7 +33,8 @@ class MyordenHistorialRecyclerViewAdapter(var historial: ArrayList<HistorialOrde
 
     override fun getItemCount(): Int {
 
-        return historial.size
+ return historial.size
+
     }
 
 

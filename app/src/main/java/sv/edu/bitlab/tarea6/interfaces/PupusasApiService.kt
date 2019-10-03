@@ -4,10 +4,8 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import sv.edu.bitlab.tarea6.entity.HistorialOrden
-import sv.edu.bitlab.tarea6.entity.Orden
-import sv.edu.bitlab.tarea6.entity.Relleno
-import sv.edu.bitlab.tarea6.entity.RellenoWrapper
+import retrofit2.http.Path
+import sv.edu.bitlab.tarea6.entity.*
 
 interface PupusasApiService {
 
@@ -17,6 +15,9 @@ interface PupusasApiService {
     @GET("ordens")
     fun getOrdenes():Call<List<HistorialOrden>>
 
-    @POST("orden")
-    fun submitOrden(@Body params: Orden):Call<Orden>
+    @POST("ordens")
+    fun submitOrden(@Body params: HistorialOrden):Call<HistorialOrden>
+
+    @POST("ordens")
+    fun submitOrden(@Body params: HistorialOrdenPOST):Call<HistorialOrdenPOST>
 }

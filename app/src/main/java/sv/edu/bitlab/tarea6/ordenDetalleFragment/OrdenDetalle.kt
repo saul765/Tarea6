@@ -3,6 +3,7 @@ package sv.edu.bitlab.tarea6.ordenDetalleFragment
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import sv.edu.bitlab.tarea6.R
-import sv.edu.bitlab.tarea6.entity.Orden
-import sv.edu.bitlab.tarea6.entity.Pupusa
+import sv.edu.bitlab.tarea6.entity.*
 
 import sv.edu.bitlab.tarea6.mainActivity.OrdenFragment
 import sv.edu.bitlab.tarea6.mainActivity.recyclerView.MyOrdenRecyclerViewAdapter
@@ -53,6 +53,9 @@ class OrdenDetalle : Fragment(),OrdenDetalleViewHolder.OrdenItemListener {
     private var listView: RecyclerView? = null
     private var inflater: LayoutInflater? = null
 
+     var  arroz:ArrayList<OrdenPupusas> = ArrayList()
+     var maiz:ArrayList<OrdenPupusas> = ArrayList()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,6 +70,9 @@ class OrdenDetalle : Fragment(),OrdenDetalleViewHolder.OrdenItemListener {
         listView!!.layoutManager = LinearLayoutManager(this.context)
 
        listView!!.adapter = OrdenDetalleAdapter(listaPupusa, this)
+
+
+        listener?.onClickOrder(makeOrder(),makeOrder2())
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -90,20 +96,71 @@ class OrdenDetalle : Fragment(),OrdenDetalleViewHolder.OrdenItemListener {
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
+  fun makeOrder():HistorialOrden{
+
+      val id=10
+      val status="recibida"
+      val arrozFinal:ArrayList<OrdenPupusas> = ArrayList()
+      arrozFinal.add(OrdenPupusas("1","maiz",5,"3-10-2019"))
+      val maizFinal:ArrayList<OrdenPupusas> = ArrayList()
+      maizFinal.add(OrdenPupusas("2","arroz",6,"3-10-2019"))
+      val precioUnidad=0.5F
+      val total= getTotal()
+
+      val historialOrden=HistorialOrden(id,status,arrozFinal,maizFinal,precioUnidad,total)
+
+      return historialOrden
+  }
+ fun makeOrder2():HistorialOrdenPOST{
+
+     val id=10
+     val status="recibida"
+     val arrozFinal:ArrayList<OrdenPupusasPOST> = ArrayList()
+     arrozFinal.add(OrdenPupusasPOST(1,"maiz",5,5,"2019-10-3","2019-10-3",10))
+     val maizFinal:ArrayList<OrdenPupusasPOST> = ArrayList()
+     maizFinal.add(OrdenPupusasPOST(2,"arroz",6,5,"2019-10-3","2019-10-3",10))
+     val precioUnidad=0.5F
+     val total= getTotal()
+
+     val historialOrdenPOST=HistorialOrdenPOST(id,status,arrozFinal,maizFinal,precioUnidad,total)
+
+     return historialOrdenPOST
+ }
+
+    fun getTotal():Float{
+        var total=0.0F
+
+        for (x in listaPupusa){
+
+            total=total+x.cantidad*0.5F
+            Log.d("total","${x.cantidad}")
+        }
+
+        return total
+    }
+
+    fun fillArrays(arrozFinal:ArrayList<OrdenPupusas>,maizFinal: ArrayList<OrdenPupusas>){
+
+        for (item in listaPupusa){
+
+            if (item.tipo_masa.equals("Maiz")){
+
+
+
+            }else{
+
+
+            }
+
+
+
+        }
+    }
+
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
+        fun onClickOrder(orden:HistorialOrden,ordenPOST: HistorialOrdenPOST)
     }
 
     companion object {

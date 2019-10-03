@@ -15,6 +15,11 @@ import sv.edu.bitlab.tarea6.ordenDetalleFragment.OrdenDetalleActivity
 import sv.edu.bitlab.tarea6.ordenHistorial.OrdenHistorialActivity
 
 class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionListener,OrdenDetalle.OnFragmentInteractionListener {
+    override fun onClickOrder(orden: HistorialOrden, ordenPOST: HistorialOrdenPOST) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
     override fun returnOrden(orden: Orden) {
         //this.orden=orden
     }
@@ -22,6 +27,8 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
 
     val orden=Orden()
     lateinit var listaPupusas:ArrayList<Pupusa>
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +47,7 @@ class MainActivity : AppCompatActivity(),OrdenFragment.OrdenFragmentInteractionL
             parseData()
             var bundle = Bundle()
             bundle.putParcelableArrayList("Orden",listaPupusas)
+
             val intent = Intent(this,OrdenDetalleActivity::class.java)
             intent.putExtras(bundle)
             startActivity(intent)

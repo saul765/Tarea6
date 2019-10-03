@@ -39,12 +39,7 @@ class OrdenHistorialViewHolder(itemView: View, val listener: OrdenHistorialItemL
 
         }
 
-
-
-
-
-
-
+        
 
     }
 

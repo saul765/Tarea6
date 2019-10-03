@@ -67,16 +67,27 @@ class OrdenHistorialDetalleFragment : Fragment() {
         view.id_detalle.text="ORDER ID: ${historial.id}"
         view.status_detalle.text="STATUS: ${historial.status}"
         view.precio_detalle.text="PRECIO UNIDAD: $${historial.precio_unidad}"
-        val apidate=historial.arroz.get(0).created_at
-        val date = LocalDate.parse(apidate.dropLast(14))
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-        val formattedDate = date.format(formatter)
 
-       view.fecha_detalle.text="FECHA: $formattedDate"
-        val cantidad_maiz=historial.maiz.get(0).total
-        view.maiz_detalle.text="x $cantidad_maiz $relleno_maiz Maiz"
-        val cantidad_arroz=historial.arroz.get(0).total
-        view.arroz_detalle.text="x $cantidad_arroz $relleno_arroz Arroz"
+        if (historial.arroz.size!=0){
+
+            val apidate=historial.arroz?.get(0).created_at
+            val date = LocalDate.parse(apidate?.dropLast(14))
+            val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+            val formattedDate = date?.format(formatter)
+
+            view.fecha_detalle.text="FECHA: ${formattedDate}"
+
+            val cantidad_arroz=historial.arroz.get(0).total
+            view.arroz_detalle.text="x $cantidad_arroz $relleno_arroz Arroz"
+        }
+
+        if (historial.maiz.size!=0){
+            val cantidad_maiz=historial.maiz.get(0).total
+            view.maiz_detalle.text="x $cantidad_maiz $relleno_maiz Maiz"
+        }
+
+
+
 
        view.total_detalle.text="TOTAL $${historial.total} USD"
 

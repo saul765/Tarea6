@@ -14,9 +14,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.fragment_orden.*
 import kotlinx.android.synthetic.main.fragment_orden.view.*
+import kotlinx.android.synthetic.main.fragment_orden_detalle.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -71,6 +73,8 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
             //orderLists = arguments!!.getParcelableArrayList<Orden>(ORDERS_LIST)!!
             order=arguments!!.getParcelable<Orden>(ORDER)!!
         }
+
+
     }
 
     override fun onCreateView(
@@ -78,7 +82,6 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
         savedInstanceState: Bundle?
     ): View? {
         this.inflater = inflater
-
 
         return inflater.inflate(R.layout.fragment_orden_list, container, false)
     }
@@ -112,9 +115,9 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
                // adapter.orden2=order2
                // adapter.orden=orden1
 
-
+/*
                 Log.d("MUTABLE LIST ORDENN 1","${adapter.orden.rellenos}")
-                Log.d("MUTABLE PARCE","${order.rellenos}")
+                Log.d("MUTABLE PARCE","${order.rellenos}")*/
                 adapter.notifyDataSetChanged()
 
 
@@ -152,17 +155,7 @@ class OrdenFragment : Fragment() ,OrdenItemViewHolder.OrdenItemListener{
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson
-     * [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
+
     interface OrdenFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
