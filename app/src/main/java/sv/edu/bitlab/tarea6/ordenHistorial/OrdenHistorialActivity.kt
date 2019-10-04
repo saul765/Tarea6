@@ -20,11 +20,22 @@ class OrdenHistorialActivity : AppCompatActivity(),OrdenHistorialFragment.OnList
     }
 
     override fun changetoFragmentOrden(historial:ArrayList<HistorialOrden>,position:Int) {
-        val id_maiz=historial.get(position).maiz.get(0).relleno_id.toInt()
-        val id_arroz=historial.get(position).arroz.get(0).relleno_id.toInt()
-       val relleno_maiz=rellenos.get(id_maiz-1)
+        var id_maiz=1
+        var id_arroz=1
+        if (historial.get(position).maiz.size!=0){
+             id_maiz=historial.get(position).maiz.get(0).relleno_id.toInt()
+        }
+        if (historial.get(position).arroz.size!=0){
+
+             id_arroz=historial.get(position).arroz.get(0).relleno_id.toInt()
+        }
+      //  val id_maiz=historial.get(position).maiz.get(0).relleno_id.toInt()
+        //val id_arroz=historial.get(position).arroz.get(0).relleno_id.toInt()
+
+        val relleno_maiz=rellenos.get(id_maiz-1)
         val relleno_arroz=rellenos.get(id_arroz-1)
         val history=historial.get(position)
+
       //  val fragment = OrdenHistorialDetalleFragment.newInstance(historial,rellenos)
         val fragment = OrdenHistorialDetalleFragment.newInstance(history,relleno_maiz,relleno_arroz)
 

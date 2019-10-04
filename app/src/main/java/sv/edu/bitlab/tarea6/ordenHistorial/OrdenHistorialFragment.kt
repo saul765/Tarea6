@@ -44,13 +44,18 @@ class OrdenHistorialFragment : Fragment(),OrdenHistorialViewHolder.OrdenHistoria
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewDetalleOrden(id: TextView, fecha: TextView, total: TextView,status:TextView, position: Int) {
         id.text="Order ID: ${historial.get(position).id}"
+        Log.d("POSITITON","THE POSITION IS $position")
+        if (historial.get(position).maiz.size!=0) {
 
-        if (historial.get(position).arroz.size!=0) {
-            val apidate = historial?.get(position).arroz.get(0).created_at
+            val apidate = historial.get(position).maiz.get(0).created_at
+            Log.d("DATE","$apidate")
             val date = LocalDate.parse(apidate.dropLast(14))
             val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
             val formattedDate = date.format(formatter)
             fecha.text="Date: $formattedDate "
+        }else{
+
+            fecha.text="Date: "
         }
 
 
